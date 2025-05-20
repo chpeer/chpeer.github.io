@@ -7,8 +7,9 @@ categories: qnap cloudflare trafik
 This post outlines how to secure your QNAP NAS using Cloudflare Proxy and an additional reverse
 proxy Trafik.
 
-Warning: Exposing your NAS to the internet makes it vulnerable to attacks - only do this if you know
-what you are doing, and at your own risk.
+> [!CAUTION]
+> Exposing your NAS to the internet makes it vulnerable to attacks - only do this if you know
+> what you are doing, and at your own risk.
 
 # Background
 The widespread recommendation is to not have your QNAP NAS accessible from the internet in order to
@@ -41,7 +42,7 @@ Besides the QNAP NAS, we will need a server (e.g. RaspberryPi) running docker. T
 port must not be accessible from the internet or the vlan your exposed services are running in.
 
 # Traefik
-We set up Traefik with a file provider:
+We set up [Traefik](https://traefik.io/traefik/) with a file provider:
 
 <insert docker compose files>
 set up the route/service
@@ -65,6 +66,7 @@ set dns -> should resolve
 
 
 # Cloudflare proxy
+
 Assumption that domain/DNS is managed by cloudflare
 enable proxy mode
 change SSL settings
