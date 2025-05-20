@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "Protecting QNAP NAS using Cloudflare Proxy and Trafik"
+title:  "Protecting QNAP NAS using Cloudflare Proxy and Traefik"
 date:   2025-05-09
-categories: qnap cloudflare trafik
+categories: qnap cloudflare traefik
 ---
 This post outlines how to secure your QNAP NAS using Cloudflare Proxy and an additional reverse
-proxy Trafik.
+proxy Traefik.
 
 > [!CAUTION]
 > Exposing your NAS to the internet makes it vulnerable to attacks - only do this if you know
@@ -31,13 +31,13 @@ those annoying bots).
 I'm using Cloudflare as a proxy, which already blocks known bad actors and attacks. Cloudflare then
 forwards the traffic through the firewall to the Traefik, which is acting as the internal
 reverse-proxy. While this adds another layer of security, it also allows me to add additional
-security features later on (SSO, crowdsec). The reverse-proxy then forwards the request to the
+security features later on (SSO, CrowdSec). The reverse-proxy then forwards the request to the
 target host, the QNAP NAS.
 
 Each of the self-hosted services sits in a dedicated VLAN with strict firewall rules only allowing
 traffic between the services and between the designated ports.
 
-# Hardware Preqrequisits
+# Hardware Prerequisites
 Besides the QNAP NAS, we will need a server (e.g. RaspberryPi) running docker. The server's SSH
 port must not be accessible from the internet or the vlan your exposed services are running in. 
 
@@ -108,7 +108,7 @@ http:
       serverName: "<your_nas>.myqnapcloud.com"
 ```
 This specifies a route for host `<your_domain>` (e.g. `nas.example.com`) listening on port `websecure`(443), forwarding this traffic to service `nas`. 
-The serivce `nas` then specifies that the QNAP NAS can be reached via `nas_ip`. 
+The service `nas` then specifies that the QNAP NAS can be reached via `nas_ip`. 
 
 `serversTransports.nas.serverName` specifies the hostname on the SSL certificate returned by your QNAP NAS. I've mine still set up to pull a cert with a hostname for `myqnapcloud.com`, so needed to set this option.
 
@@ -170,7 +170,7 @@ Hit your public IP address directly and verify that it is not accessible. You ca
 # Done
 Nice one, that's it!
 
-To further strengthen your security you can look into adding extra services like Crowdsec or Single Sign On to Traefik. You should also run Traefik on a rootless docker engine. 
+To further strengthen your security you can look into adding extra services like CrowdSec or Single Sign On to Traefik. You should also run Traefik on a rootless docker engine. 
 
 Lastly, don't forget to regularly update your server and Traefik to avoid running an old, potentially vulnerable software version.
 
